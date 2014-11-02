@@ -11,7 +11,7 @@ const float xThresh = 0.005f, yThresh = 0.01f;
 const int WIDTH = 1600, HEIGHT = 900;
 const float scaleA = 1.0, scaleV = 1.0, scaleS = 1.0, armLength = 2.0; //stores the  armlength of the person using the program
 
-void draw(float x, float y, float tipSize, int textColor, float pX, float pY,  float xCursor, float yCursor, float notSpread) {
+void draw(float x, float y, float tipSize, int textColor,float pX, float pY, float yCursor, bool notSpread) {
 	//sets up the color for clearing the screen
 	//glClearColor(1.0f, 1.0f, 1.0f, 0);
 	//glClear(GL_COLOR_BUFFER_BIT);
@@ -50,7 +50,7 @@ void draw(float x, float y, float tipSize, int textColor, float pX, float pY,  f
 	glVertex2f(pX, pY);
 	//print new cursor
 	glColor3ub(0, 0, 255);
-	glVertex2f(xCursor, yCursor);
+	glVertex2f(x, yCursor);
 	glEnd();
 	glutSwapBuffers();
 	glReadBuffer(GL_FRONT);
@@ -116,25 +116,26 @@ int main(int argc, char** argv)
 		float x = -1 * xScale * collector.roll - 25.0f;
 		float y = -1 * yScale * collector.pitch + 20.0f; //up is positive
 		float xi = x;
+		float yi = y;
 		float pastX = 0.0, pastY = 0.0;
 		// loop keeps running and mapping the coordinates on the window
 		while (true) {
+			if (x < xi) {
+				if (y < yi) {
+					x = 19.9f;
+					y += 10.0f;
+				}
+				else x = xi;
+			}
 			if (x < 20.0f) {
 				//gets 48 packets of data every second
 				hub.run(1000 / FPS);
 
 				if (collector.currentPose.toString() == "waveIn")
-					x -= 0.3f; //decrease the size of the tip
+					x -= 0.3f; //moves the cursor oto the left
 				else if (collector.currentPose.toString() == "waveOut")
-					x += 0.1f; //increase the size of the tip*/
+					x += 0.2f; //moves the cursor to the right
 
-				//check whether the thumb is touching the picky and modify color value
-				/*else if (collector.currentPose.toString() == "thumbToPinky") {
-					textColor--;
-					if (textColor < 1) {
-						textColor = RED;
-					}
-				}*/
 				if (collector.currentPose.toString() == "fist")
 				{
 					textColor = WHITE;
@@ -153,10 +154,10 @@ int main(int argc, char** argv)
 				if (!(collector.currentPose.toString() == "fingersSpread" || collector.currentPose.toString() == "waveOut" || collector.currentPose.toString() == "waveIn")) {
 					check = true;
 				}
-				draw(x + collector.roll * xScale, y + collector.yaw * yScale, tipSize, textColor, pastX, pastY, x - 7.5f, y - 5.0f, check);
+				draw(x + collector.roll * xScale, y + collector.yaw * yScale, tipSize, textColor, pastX, pastY, y - 5.0f, check);
 				//draw(pastX, pastY, 5.0f, WHITE);
 				//draw(x - 7.5f, y - 5.0f, 5.0f, BLUE);
-				pastX = x - 7.5f;
+				pastX = x + collector.roll * xScale;
 				pastY = y - 5.0f;
 				x += 0.01f;
 				check = false;
