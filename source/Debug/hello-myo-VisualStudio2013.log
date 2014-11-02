@@ -1,9 +1,8 @@
-﻿Build started 2014-11-02 12:03:03 PM.
+﻿Build started 2014-11-02 12:29:19 PM.
      1>Project "C:\Users\Sadman\Documents\Dropbox\GitHub\MyoPad\source\hello-myo-VisualStudio2013.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\include /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
-     1>main.cpp(118): warning C4552: '+' : operator has no effect; expected operator with side-effect
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Sadman\Documents\Dropbox\GitHub\MyoPad\source\Debug\MyoPad.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\lib myo32.lib freeglut.lib glew32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Sadman\Documents\Dropbox\GitHub\MyoPad\source\Debug\MyoPad.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Sadman\Documents\Dropbox\GitHub\MyoPad\source\Debug\MyoPad.lib" /MACHINE:X86 Debug\interpreter.obj
          Debug\filter.obj
@@ -19,4 +18,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.85
+Time Elapsed 00:00:01.12

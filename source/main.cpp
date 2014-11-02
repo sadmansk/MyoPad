@@ -12,7 +12,7 @@ const int WIDTH = 1600, HEIGHT = 900;
 const float scaleA = 1.0, scaleV = 1.0, scaleS = 1.0, armLength = 2.0; //stores the  armlength of the person using the program
 bool first = true;
 
-void draw(float x, float y, float tipSize, int textColor,float pX, float pY, float cursorY, float yCursor, bool notSpread) {
+void draw(float x, float y, float tipSize, int textColor, float pX, float pY, float cursorY, float yCursor, bool notSpread, bool erase) {
 	//sets up the color for clearing the screen
 	//glClearColor(1.0f, 1.0f, 1.0f, 0);
 	//glClear(GL_COLOR_BUFFER_BIT);
@@ -38,12 +38,18 @@ void draw(float x, float y, float tipSize, int textColor,float pX, float pY, flo
 		break;
 	}
 
-	if (notSpread && !first) {
+	if (notSpread && !first && !erase) {
 		glPointSize(tipSize);
 		glBegin(GL_LINES);
 		glVertex2f(x, y);
 		glVertex2f(pX, pY); //drawing point on the screen
 		glEnd();
+	}
+	else if (erase) {
+	glPointSize(tipSize);
+	glBegin(GL_POINTS);
+	glVertex2f(x, y);
+	glEnd();
 	}
 	first = false;
 	glPointSize(5.0f);
@@ -81,7 +87,7 @@ int main(int argc, char** argv)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
+	bool erase = false;
 	bool write = true;
 	
 	// We catch any exceptions that might occur below -- see the catch statement for more details.
@@ -115,7 +121,7 @@ int main(int argc, char** argv)
 		bool check = false;
 		hub.addListener(&collector);
 		int currentTime = clock();
-		hub.run(1000 / FPS); -1 * yScale * collector.pitch + 20.0f;
+		hub.run(1000 / FPS);
 		float x = -1 * xScale * collector.roll - 25.0f;
 		float y = -1 * yScale * collector.pitch + 20.0f; //up is positive
 		float xi = x;
@@ -135,14 +141,15 @@ int main(int argc, char** argv)
 				hub.run(1000 / FPS);
 
 				if (collector.currentPose.toString() == "waveIn")
-					x -= 0.3f; //moves the cursor oto the left
+					x -= 0.2f; //moves the cursor oto the left
 				else if (collector.currentPose.toString() == "waveOut")
-					x += 0.28f; //moves the cursor to the right
+					x += 0.18f; //moves the cursor to the right
 
 				if (collector.currentPose.toString() == "fist")
 				{
 					textColor = WHITE;
 					tipSize = 20.0f; //for the eraser
+					erase = true;
 				}else{
 					textColor = BLACK;
 					tipSize = 2.5f;
@@ -157,14 +164,15 @@ int main(int argc, char** argv)
 				if (!(collector.currentPose.toString() == "fingersSpread" || collector.currentPose.toString() == "waveOut" || collector.currentPose.toString() == "waveIn")) {
 					check = true;
 				}
-				draw(x + collector.roll * xScale, y + collector.yaw * yScale, tipSize, textColor, pastX, pastY, cursorY, y - 5.0f, check);
+				draw(x + collector.roll * xScale, y + collector.yaw * yScale, tipSize, textColor, pastX, pastY, cursorY, y - 5.0f, check, erase);
 				//draw(pastX, pastY, 5.0f, WHITE);
 				//draw(x - 7.5f, y - 5.0f, 5.0f, BLUE);
 				pastX = x + collector.roll * xScale;
 				pastY = y + collector.yaw * yScale;
 				cursorY = y - 5.0f;
-				x += 0.01f;
+				if (!erase) x += 0.01f;
 				check = false;
+				erase = false;
 				//print the position
 				//std::cout << collector.roll << " " << collector.yaw;
 			}
