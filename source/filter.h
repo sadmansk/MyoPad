@@ -4,7 +4,7 @@ class Filter : public myo::DeviceListener {
 public:
 	Filter();
 	void onUnpair(myo::Myo* myo, uint64_t timestamp);
-	void onAccelerometerData(myo::Myo *myo, uint64_t timestamp, const myo::Vector3< float > &accel);
+	void onAccelerometerData(myo::Myo *myo, uint64_t timestamp, const myo::Vector3< float > &accel, const myo::Quaternion<float>& quat);
 	bool onArm;
 	void onOrientationData(myo::Myo* myo, uint64_t timestamp, const myo::Quaternion<float>& quat);
 	myo::Arm whichArm;

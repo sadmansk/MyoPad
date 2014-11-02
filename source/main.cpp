@@ -2,11 +2,34 @@
 #include "filter.h"
 #include "kinematics.h"
 #include <time.h>
+#include <GL\glew.h>
+#include <GL\freeglut.h>
 
 void map(float *pos, float qx, float qy, float qz, float arm) {
 	pos[0] = pos[0] + (qx * arm);
 	pos[1] = pos[1] + (qy * arm);
 	pos[2] = pos[2] + (qz * arm);
+}
+
+void draw(float x, float y, bool on) {
+	//glClear(GL_COLOR_BUFFER_BIT);
+	glClearColor(255, 255, 255, 255);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(-60, 60, -60, 60, -1, 1);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	glColor3ub(68, 8, 45);
+	//glBegin(GL_LINE_STRIP);
+	glPointSize(10.0);
+	glBegin(GL_POINTS);
+	glVertex2f(x, y);
+	glEnd();
+	glutSwapBuffers();
+
 }
 
 int main(int argc, char** argv)
