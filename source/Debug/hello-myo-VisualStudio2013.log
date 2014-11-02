@@ -1,11 +1,10 @@
-﻿Build started 2014-11-01 9:04:43 PM.
+﻿Build started 2014-11-02 1:50:08 AM.
      1>Project "C:\Users\Sadman\Documents\Dropbox\GitHub\MyoPad\source\hello-myo-VisualStudio2013.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\include /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt interpretertest.cpp
-         interpretertest.cpp
-       Link:
+     1>Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Sadman\Documents\Dropbox\GitHub\MyoPad\source\Debug\MyoPad.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\lib myo32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Sadman\Documents\Dropbox\GitHub\MyoPad\source\Debug\MyoPad.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Sadman\Documents\Dropbox\GitHub\MyoPad\source\Debug\MyoPad.lib" /MACHINE:X86 Debug\interpreter.obj
-         Debug\interpretertest.obj
+         Debug\filter.obj
+         Debug\kinematics.obj
+         Debug\main.obj
          hello-myo-VisualStudio2013.vcxproj -> C:\Users\Sadman\Documents\Dropbox\GitHub\MyoPad\source\Debug\MyoPad.exe
        PostBuildEvent:
          COPY "..\bin\myo32.dll" "C:\Users\Sadman\Documents\Dropbox\GitHub\MyoPad\source\Debug\"
@@ -16,4 +15,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.72
+Time Elapsed 00:00:00.24

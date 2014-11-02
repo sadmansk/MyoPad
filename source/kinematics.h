@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 myohack. All rights reserved.
 //
 
-#ifndef __interpreter__kinematics__
-#define __interpreter__kinematics__
+//#ifndef __interpreter__kinematics__
+//#define __interpreter__kinematics__
 
 // Kinematic class contains the acceleration, velocity and position data
 // Integrates and filters acceleration input to give accurate velocity
@@ -44,7 +44,7 @@ public:
     void zeroTime(void); //
     
     // Function that will return needed information in the data flow
-    float *update(float *accelIn, float *position);
+    float *update(float *accelIn);
     
     // Print functions
     void printAll(void);
@@ -53,4 +53,4 @@ public:
     void freeAll(void);
 };
 
-#endif /* defined(__interpreter__kinematics__) */
+//#endif /* defined(__interpreter__kinematics__) */

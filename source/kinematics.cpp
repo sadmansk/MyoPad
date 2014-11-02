@@ -38,8 +38,13 @@ void Kinematic::doubleIntegrate(void){
 // -------- Start of public functions --------
 
 Kinematic::Kinematic(int dimIn, float scaleIn_a, float scaleIn_v, float scaleIn_s){ // dim = 3, float = 0.0
+	
+	dim = dimIn;
+	scale_a = scaleIn_a;
+	scale_v = scaleIn_v;
+	scale_s = scaleIn_s;
     
-    accelp = (float*) malloc(dim * sizeof(float));
+	accelp = (float*) malloc(dim * sizeof(float));
     accel = (float*) malloc(dim * sizeof(float));
     velop = (float*) malloc(dim * sizeof(float));
     velo = (float*) malloc(dim * sizeof(float));
@@ -48,16 +53,13 @@ Kinematic::Kinematic(int dimIn, float scaleIn_a, float scaleIn_v, float scaleIn_
     reftimep = (int)clock();
     
     for (int i = 0; i < dim; i ++) {
-        accelp[i] = 0.0;
+        accelp[i] = 0.0f;
         accel[i] = accelp[i];
     }
     
     zeroAll();
     
-    dim = dimIn;
-    scale_a = scaleIn_a;
-    scale_v = scaleIn_v;
-    scale_s = scaleIn_s;
+    
 }
 
 float *Kinematic::getPosition(float *position){
@@ -85,8 +87,8 @@ float *Kinematic::getAcceleration(float *acceleration){
 }
 
 void Kinematic::inputAccel(float *accelIn){
-    for (int i = 0; i < dim; i++){
-        accel[i] = accelp[i];
+	for (int i = 0; i < dim; i++){
+		accel[i] = accelp[i];
         accelp[i] = accelIn[i];
     }
     return;
@@ -117,10 +119,11 @@ void Kinematic::zeroTime(void){
     reftimep = (int) clock();
 }
 
-float *Kinematic::update(float *accelIn, float *position){
-    position = (float*) malloc(dim * sizeof(float));
+float *Kinematic::update(float *accelIn){
+	float *position = (float*)malloc(dim * sizeof(float));
     inputAccel(accelIn);
     doubleIntegrate();
+
     for (int i = 0; i < dim; i++) {
         position[i] = pos[i];
     }

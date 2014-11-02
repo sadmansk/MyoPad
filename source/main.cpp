@@ -11,7 +11,7 @@ void map(float *pos, float qx, float qy, float qz, float arm) {
 
 int main(int argc, char** argv)
 {
-	const int dim = 3, timeInt = 24000;
+	const int dim = 3, timeInt = 500000;
 	float scaleA = 1.0, scaleV = 1.0, scaleS = 1.0;
 	//for storing the accelerometer data and the position vector data
 	float *accelIn = (float*)malloc(dim * sizeof(float));
@@ -43,7 +43,8 @@ int main(int argc, char** argv)
 		// Next we construct an instance of our DeviceListener, so that we can register it with the Hub.
 		Filter collector;
 		Kinematic accToPos(dim, scaleA, scaleV, scaleS); //adds the integral class 
-
+		//sets the precision for floating points
+		std::cout.precision(2);
 
 		// Hub::addListener() takes the address of any object whose class inherits from DeviceListener, and will cause
 		// Hub::run() to send events to all registered device listeners.
@@ -52,24 +53,28 @@ int main(int argc, char** argv)
 		// loop keeps running and mapping the coordinates on the window
 		while (true) {
 			//gets 48 packets of data every second
-			hub.run(1000 / 24);
-			
+			hub.run(1000 / 2);
+
 			//store the accelerometer data in an array
 			accelIn[0] = collector.accelX;
 			accelIn[1] = collector.accelY;
 			accelIn[2] = collector.accelZ;
 
 			//integrate the data
-			position = accToPos.update(accelIn, position);
+			position = accToPos.update(accelIn);
 
 			//send the value to map
 			map(position, collector.quatX, collector.quatY, collector.quatZ, armLength);
-
+			std::cout << '\r';
 			//print the position
-			for (int i = 0; i < dim, i++)
-				std::cout << position[i] << " ";
+			for (int i = 0; i < dim; i++)
+				std::cout << accelIn[i] << " ";
+
 		}
 
+		free(accelIn);
+		free(position);
+		accToPos.freeAll();
 		// If a standard exception occurred, we print out its message and exit.
 	}
 	catch (const std::exception& e) {
@@ -78,4 +83,6 @@ int main(int argc, char** argv)
 		std::cin.ignore();
 		return 1;
 	}
-};
+
+	return 0;
+}
