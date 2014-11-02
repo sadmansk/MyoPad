@@ -1,18 +1,19 @@
-﻿Build started 11/1/2014 8:14:05 PM.
-     1>Project "C:\Users\Serge\Desktop\MyoPad\source\hello-myo-VisualStudio2013.vcxproj" on node 2 (Build target(s)).
+﻿Build started 2014-11-01 9:04:43 PM.
+     1>Project "C:\Users\Sadman\Documents\Dropbox\GitHub\MyoPad\source\hello-myo-VisualStudio2013.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\include /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt interpreter.cpp
-         interpreter.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\include /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt interpretertest.cpp
+         interpretertest.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Serge\Desktop\MyoPad\source\Debug\MyoPad.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\lib myo32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Serge\Desktop\MyoPad\source\Debug\MyoPad.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Serge\Desktop\MyoPad\source\Debug\MyoPad.lib" /MACHINE:X86 Debug\interpreter.obj
-         hello-myo-VisualStudio2013.vcxproj -> C:\Users\Serge\Desktop\MyoPad\source\Debug\MyoPad.exe
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Sadman\Documents\Dropbox\GitHub\MyoPad\source\Debug\MyoPad.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\lib myo32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Sadman\Documents\Dropbox\GitHub\MyoPad\source\Debug\MyoPad.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Sadman\Documents\Dropbox\GitHub\MyoPad\source\Debug\MyoPad.lib" /MACHINE:X86 Debug\interpreter.obj
+         Debug\interpretertest.obj
+         hello-myo-VisualStudio2013.vcxproj -> C:\Users\Sadman\Documents\Dropbox\GitHub\MyoPad\source\Debug\MyoPad.exe
        PostBuildEvent:
-         COPY "..\bin\myo32.dll" "C:\Users\Serge\Desktop\MyoPad\source\Debug\"
+         COPY "..\bin\myo32.dll" "C:\Users\Sadman\Documents\Dropbox\GitHub\MyoPad\source\Debug\"
                
          :VCEnd
                  1 file(s) copied.
-     1>Done Building Project "C:\Users\Serge\Desktop\MyoPad\source\hello-myo-VisualStudio2013.vcxproj" (Build target(s)).
+     1>Done Building Project "C:\Users\Sadman\Documents\Dropbox\GitHub\MyoPad\source\hello-myo-VisualStudio2013.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.83
+Time Elapsed 00:00:00.72

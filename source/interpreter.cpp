@@ -132,7 +132,7 @@ public:
 	float quatX, quatY, quatZ, quatW;
     myo::Pose currentPose;
 };
-
+/*
 int main(int argc, char** argv)
 {
     // We catch any exceptions that might occur below -- see the catch statement for more details.
@@ -183,3 +183,4 @@ int main(int argc, char** argv)
         return 1;
     }
 }
+*/

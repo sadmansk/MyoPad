@@ -81,11 +81,9 @@ public:
 		std::cout << "QuatX: "<< '[' << quatX << ']' << 
 					 "QuatY: "<< '[' << quatY <<']' <<
 					 "QuatZ: "<< '[' << quatZ <<']' <<
-					 "Quatw: " <<'[' << quatW << ']' << '\n';
-
-		std::cout << "accelX: " << '[' << accelX << ']' <<
+					 "Quatw: " <<'[' << quatW << ']' << "accelX: " << '[' << accelX << ']' <<
 					 "accelY: " << '[' << accelY << ']' <<
-					 "accelZ: " << '[' << accelZ << ']' << '\n';
+					 "accelZ: " << '[' << accelZ << ']';
 
 		if (onArm) {
 			// Print out the currently recognized pose and which arm Myo is being worn on.
