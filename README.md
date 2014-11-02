@@ -1,7 +1,7 @@
 Myo Pad
 =======
-###Current Version: 0.0.1
-###Developed at EngHack 2014 in University of Waterloo
+####Current Version: 0.0.1
+####Developed at EngHack 2014 in University of Waterloo
 
 ###What is the Myo Armband?
 
