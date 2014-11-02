@@ -1,8 +1,23 @@
 //the main
 #include "filter.h"
-void map(float *xf, float *yf, float *zf, float x, float y, float z);
+#include "kinematics.h"
+#include <time.h>
+
+void map(float *pos, float qx, float qy, float qz, float arm) {
+	pos[0] = pos[0] + (qx * arm);
+	pos[1] = pos[1] + (qy * arm);
+	pos[2] = pos[2] + (qz * arm);
+}
+
 int main(int argc, char** argv)
 {
+	const int dim = 3, timeInt = 24000;
+	float scaleA = 1.0, scaleV = 1.0, scaleS = 1.0;
+	//for storing the accelerometer data and the position vector data
+	float *accelIn = (float*)malloc(dim * sizeof(float));
+	float *position = (float*)malloc(dim * sizeof(float));
+	float armLength = 2.0; //stores the  armlength of the person using the program
+	
 	// We catch any exceptions that might occur below -- see the catch statement for more details.
 	try {
 
@@ -27,21 +42,32 @@ int main(int argc, char** argv)
 
 		// Next we construct an instance of our DeviceListener, so that we can register it with the Hub.
 		Filter collector;
+		Kinematic accToPos(dim, scaleA, scaleV, scaleS); //adds the integral class 
+
 
 		// Hub::addListener() takes the address of any object whose class inherits from DeviceListener, and will cause
 		// Hub::run() to send events to all registered device listeners.
 		hub.addListener(&collector);
-
+		int currentTime = clock();
 		// loop keeps running and mapping the coordinates on the window
 		while (true) {
 			//gets 48 packets of data every second
-			hub.run(1000 / 48);
+			hub.run(1000 / 24);
+			
+			//store the accelerometer data in an array
+			accelIn[0] = collector.accelX;
+			accelIn[1] = collector.accelY;
+			accelIn[2] = collector.accelZ;
 
 			//integrate the data
+			position = accToPos.update(accelIn, position);
 
 			//send the value to map
+			map(position, collector.quatX, collector.quatY, collector.quatZ, armLength);
 
-			//draw the points
+			//print the position
+			for (int i = 0; i < dim, i++)
+				std::cout << position[i] << " ";
 		}
 
 		// If a standard exception occurred, we print out its message and exit.
