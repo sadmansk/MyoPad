@@ -29,7 +29,7 @@ And so we did use the orientational data to position our marker on the GUI. But 
 
 ###Conclusion
 
-Our completed project is not exactly the innovation we had hoped for when we started working on it. But the entire hackathon and researching was fun nonetheless. It was fun facing problems and finding ways to work around them. The dream we had could have been revolutionary, no one would need to buy expensive graphics tablets, or note taking tablets anymore. Teachers would have an easier time sharing their notes with their student, in real time. Yes, in REAL TIME. But we still had a fun to work with end product once you get used to it. Hopefully in the future there would be better consumer grade wearable hardware with better accelerometer equipped on them, and we can finally uncomment chunks of our code and reach the goal we aimed for initially.
+Our completed project is not exactly the innovation we had hoped for when we started working on it. But the entire hackathon and researching was fun nonetheless. It was fun facing problems and finding ways to work around them. The dream we had could have been revolutionary, no one would need to buy expensive graphics tablets, or note taking tablets anymore. Teachers would have an easier time sharing their notes with their student, in real time. Yes, in REAL TIME. But we still had a fun to work with end product once you get used to it. It would have been great if we had access to the Myo arm band for longer than just 24 hours. Maybe we would have found a way to apply the Kalman filter on the acceleration vector to get a more accurate position vector out of it. 
 
 Last but not least, this project would not have been possible without all the great team members.
 
