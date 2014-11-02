@@ -9,15 +9,15 @@ The Myo armband lets you use the electrical activity in your muscles to wireless
 
 ###What is the Myo Pad?
 
-Myo Pad is a program that can be used to export drawings or writings on a surface wearing the Myo armband to drawings or writings on a digital platform.
+Myo Pad is a program that can be used to export drawings/writings on a surface wearing the Myo armband to graphical data on a computer.
 
 ###The Idea
 
-We initially planned to draw objects on the GUI of the program by using integrals on the accelerometer data from the arm band and using the quaternion values on the position vector to get an accurate position of the fist. The program would then map that position onto the program's GUI and later could be exported onto a PDF file.
+We initially planned to draw objects on the GUI of the program by using integrals on the accelerometer data from the arm band to get the position vector and using the quaternion values on the position vector to get an accurate position of the fist. The program would then map that position onto the program's GUI and later could be exported onto a PDF file.
 
 ###The Problems
 
-Our program was ready to work but then we found out that doing integration twice on the already noisy and inconsistent accelerometer values as well as appplying the rotation on the ever changing coordinate system of the arm band. We tried using an independent coordinate system by applying a three dimensional rotation vector on the existing coordinate system but the indecrepencies due to the gravity made the values impossible to work with. Hence we had to resolve to using the orientation data from the arm band since they provided a more accurate representation compared to the accelerometer data.
+Our program was ready to work but then we found out that doing integration twice on the already noisy and inconsistent accelerometer values as well as appplying the rotation on the ever changing coordinate system of the arm band. We tried using an independent coordinate system by applying a three dimensional rotation vector on the existing coordinate system but the indecrepencies due to the gravity made the values very difficult if not impossible to work with. Hence we had to resolve to using the orientation data from the arm band since they provided a more accurate representation compared to the accelerometer data.
 
 ###The Solution
 
