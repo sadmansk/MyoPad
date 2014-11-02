@@ -38,7 +38,7 @@ void draw(float x, float y, float tipSize, int textColor, float pX, float pY, fl
 		break;
 	}
 
-	if (notSpread && !first && !erase) {
+	if (notSpread && !first && !erase && fabs(pX - x) < 0.5f && fabs(pY - y) < 0.5f) {
 		glPointSize(tipSize);
 		glBegin(GL_LINES);
 		glVertex2f(x, y);
@@ -133,6 +133,7 @@ int main(int argc, char** argv)
 				if (y < yi) {
 					x = 19.9f;
 					y += 10.0f;
+					first = true;
 				}
 				else x = xi;
 			}
@@ -141,14 +142,14 @@ int main(int argc, char** argv)
 				hub.run(1000 / FPS);
 
 				if (collector.currentPose.toString() == "waveIn")
-					x -= 0.2f; //moves the cursor oto the left
+					x -= 0.15f; //moves the cursor oto the left
 				else if (collector.currentPose.toString() == "waveOut")
-					x += 0.18f; //moves the cursor to the right
+					x += 0.15f; //moves the cursor to the right
 
 				if (collector.currentPose.toString() == "fist")
 				{
 					textColor = WHITE;
-					tipSize = 20.0f; //for the eraser
+					tipSize = 100.0f; //for the eraser
 					erase = true;
 				}else{
 					textColor = BLACK;
@@ -170,13 +171,14 @@ int main(int argc, char** argv)
 				pastX = x + collector.roll * xScale;
 				pastY = y + collector.yaw * yScale;
 				cursorY = y - 5.0f;
-				if (!erase) x += 0.01f;
+				 if (!erase) x += 0.01f;
 				check = false;
 				erase = false;
 				//print the position
 				//std::cout << collector.roll << " " << collector.yaw;
 			}
 			else {
+				first = true;
 				y -= 10.0f;
 				x = xi; //switches the position of x to its initial position
 			}
