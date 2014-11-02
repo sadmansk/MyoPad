@@ -10,5 +10,6 @@ public:
 	myo::Arm whichArm;
 	float quatX, quatY, quatZ, quatW, accelX, accelY, accelZ;
 	float accelX_old, accelY_old, accelZ_old;
+	float roll_i, pitch_i, yaw_i;
 	myo::Pose currentPose;
 };
