@@ -6,14 +6,15 @@
 #include <GL\freeglut.h>
 
 //constant values
-const int DIM = 3, FPS = 24;
+const int DIM = 3, FPS = 48;
+const float xThresh = 1, yThresh = 1;
 const int WIDTH = 1000, HEIGHT = 500;
 const float scaleA = 1.0, scaleV = 1.0, scaleS = 1.0, armLength = 2.0; //stores the  armlength of the person using the program
 
 void map(float *pos, float qx, float qy, float qz, float arm) {
-	pos[0] = pos[0] + (qx * arm);
-	pos[1] = pos[1] + (qy * arm);
-	pos[2] = pos[2] + (qz * arm);
+	pos[0] = (qx * arm);
+	pos[1] = (qy * arm);
+	pos[2] = (qz * arm);
 }
 
 //detects the stablity on the z position vector
@@ -76,7 +77,7 @@ int main(int argc, char** argv)
 		// waitForAnyMyo() takes a timeout value in milliseconds. In this case we will try to find a Myo for 10 seconds, and
 		// if that fails, the function will return a null pointer.
 		myo::Myo* myo = hub.waitForMyo(10000);
-
+		
 		// If waitForAnyMyo() returned a null pointer, we failed to find a Myo, so exit with an error message.
 		if (!myo) {
 			throw std::runtime_error("Unable to find a Myo!");
@@ -87,36 +88,46 @@ int main(int argc, char** argv)
 
 		// Next we construct an instance of our DeviceListener, so that we can register it with the Hub.
 		Filter collector;
-		Kinematic accToPos(DIM, scaleA, scaleV, scaleS); //adds the integral class 
+
+		//Kinematic accToPos(DIM, scaleA, scaleV, scaleS); //adds the integral class 
 		//sets the precision for floating points
 		std::cout.precision(2);
 
 		hub.addListener(&collector);
 		int currentTime = clock();
+		hub.run(1000 / FPS);
+		float x = -10 * collector.roll - 25.0f;
+		float beginX = x;
+		
 		// loop keeps running and mapping the coordinates on the window
-		while (true) {
+		while (x < 500.0f) {
 			//gets 48 packets of data every second
 			hub.run(1000 / FPS);
 
 			//store the accelerometer data in an array
-			accelIn[0] = collector.accelX;
-			accelIn[1] = collector.accelY;
-			accelIn[2] = collector.accelZ;
+			//accelIn[0] = collector.accelX;
+			//accelIn[1] = collector.accelY;
+			//accelIn[2] = collector.accelZ;
 
 			//integrate the data
-			position = accToPos.update(accelIn);
+			//position = accToPos.update(accelIn);
 							//send the value to map
-			map(position, collector.quatX, collector.quatY, collector.quatZ, armLength);
+			//map(position, collector.quatX, collector.quatY, collector.quatZ, armLength);
 			std::cout << '\r';
-			if (write)
-				draw(position[0] * 10, position[1] * 10);
-			//print the position
-			for (int i = 0; i < DIM; i++)
-				std::cout << accelIn[i] << " ";
+			if (write){
+				draw(x + collector.roll * 10, collector.yaw * -20);
+				x += 0.025f;
 			}
+			//print the position
+			std::cout << collector.roll << " " << collector.yaw;
+
+			
+			//print the rotational components
+			//std::cout << collector.pitch_i << " " << collector.yaw_i << " " << collector.roll_i;
+		}
 		free(accelIn);
 		free(position);
-		accToPos.freeAll();
+		//accToPos.freeAll();
 	}
 	// If a standard exception occurred, we print out its message and exit.
 	catch (const std::exception& e) {
