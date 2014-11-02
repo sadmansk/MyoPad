@@ -11,7 +11,7 @@ void map(float *pos, float qx, float qy, float qz, float arm) {
 	pos[2] = pos[2] + (qz * arm);
 }
 
-void draw(float x, float y, bool on) {
+void draw(float x, float y) {
 	//glClear(GL_COLOR_BUFFER_BIT);
 	glClearColor(255, 255, 255, 255);
 
@@ -40,6 +40,13 @@ int main(int argc, char** argv)
 	float *accelIn = (float*)malloc(dim * sizeof(float));
 	float *position = (float*)malloc(dim * sizeof(float));
 	float armLength = 2.0; //stores the  armlength of the person using the program
+
+	//set up the GUI
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
+	glutInitWindowSize(600, 600);
+	glutCreateWindow("GLUT");
+	bool write = true;
 	
 	// We catch any exceptions that might occur below -- see the catch statement for more details.
 	try {
@@ -69,8 +76,6 @@ int main(int argc, char** argv)
 		//sets the precision for floating points
 		std::cout.precision(2);
 
-		// Hub::addListener() takes the address of any object whose class inherits from DeviceListener, and will cause
-		// Hub::run() to send events to all registered device listeners.
 		hub.addListener(&collector);
 		int currentTime = clock();
 		// loop keeps running and mapping the coordinates on the window
@@ -89,6 +94,8 @@ int main(int argc, char** argv)
 			//send the value to map
 			map(position, collector.quatX, collector.quatY, collector.quatZ, armLength);
 			std::cout << '\r';
+			if (write)
+				draw (position[0], position[1]);
 			//print the position
 			for (int i = 0; i < dim; i++)
 				std::cout << accelIn[i] << " ";
