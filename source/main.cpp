@@ -6,12 +6,12 @@
 #include <GL\freeglut.h>
 
 //constant values
-const int DIM = 3, FPS = 48;
+const int DIM = 3, FPS = 48, WHITE = 0, BLACK = 1, RED = 2, BLUE = 3, GREEN = 4;
 const float xThresh = 0.005f, yThresh = 0.01f;
 const int WIDTH = 1600, HEIGHT = 900;
 const float scaleA = 1.0, scaleV = 1.0, scaleS = 1.0, armLength = 2.0; //stores the  armlength of the person using the program
 
-void draw(float x, float y, float tipSize) {
+void draw(float x, float y, float tipSize, int textColor) {
 	//sets up the color for clearing the screen
 	//glClearColor(1.0f, 1.0f, 1.0f, 0);
 	//glClear(GL_COLOR_BUFFER_BIT);
@@ -22,8 +22,27 @@ void draw(float x, float y, float tipSize) {
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
-	glColor3ub(0, 0, 0);
+	switch (textColor) {
+	case WHITE:
+		glColor3ub(255, 255, 255);
+		break;
+	case BLACK:
+		glColor3ub(0, 0, 0);
+		break;
+	case RED:
+		glColor3ub(255, 0, 0);
+		break;
+	case BLUE:
+		glColor3ub(0, 0, 255);
+		break;
+	case GREEN:
+		glColor3ub(0, 255, 0);
+		break;
+	default:
+		glColor3ub(0, 0, 0);
+		break;
+	}
+	
 	//glBegin(GL_LINE_STRIP);
 	glPointSize(tipSize);
 	glBegin(GL_POINTS);
@@ -43,6 +62,7 @@ int main(int argc, char** argv)
 	float *accelIn = (float*)malloc(DIM * sizeof(float));
 	float *position = (float*)malloc(DIM * sizeof(float));
 	float tipSize = 2.5f, xScale = 2.0f, yScale = 4.0f;
+	int textColor = BLACK;
 	//set up the GUI
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
@@ -87,19 +107,55 @@ int main(int argc, char** argv)
 		hub.run(1000 / FPS);
 		float x = -1 * xScale * collector.roll - 25.0f;
 		float y = -1 * yScale * collector.pitch + 20.0f; //up is positive
-		
+		float xi = x;
+		float past_yaw = 0.0f, past_roll = 0.0f;
 		// loop keeps running and mapping the coordinates on the window
 		while (true) {
-			//gets 48 packets of data every second
-			hub.run(1000 / FPS);
-			
-			std::cout << '\r';
-			if (write){
-				draw(x + collector.roll * xScale, y + collector.yaw * yScale, tipSize);
-				x += 0.005f;
+			if (x < 20.0f) {
+				//gets 48 packets of data every second
+				hub.run(1000 / FPS);
+
+				/*if (collector.currentPose.toString() == "waveIn")
+					tipSize -= 0.1f; //decrease the size of the tip
+				else if (collector.currentPose.toString() == "waveOut")
+					tipSize += 0.1f; //increase the size of the tip*/
+
+				//check whether the thumb is touching the picky and modify color value
+				/*else if (collector.currentPose.toString() == "thumbToPinky") {
+					textColor--;
+					if (textColor < 1) {
+						textColor = RED;
+					}
+				}*/
+				if (collector.currentPose.toString() == "fist")
+				{
+					textColor = WHITE;
+					tipSize = 20.0f; //for the eraser
+				}else{
+					textColor = BLACK;
+					tipSize = 2.5f;
+				}
+				std::cout << collector.currentPose.toString() << " " << tipSize;
+				/*else if (collector.currentPose.toString() == "waveOut") {
+					textColor++;
+					if (textColor > 4)
+					textColor = WHITE;
+					}*/
+				std::cout << '\r';
+				if (!(collector.currentPose.toString() == "fingersSpread")){
+					draw(x + collector.roll * xScale, y + collector.yaw * yScale, tipSize, textColor);	
+				}
+				x += 0.01f;
+
+				past_yaw = y + collector.yaw * yScale;
+				past_roll = x + collector.roll * xScale;
+				//print the position
+				//std::cout << collector.roll << " " << collector.yaw;
 			}
-			//print the position
-			std::cout << collector.roll << " " << collector.yaw;
+			else {
+				y -= 10.0f;
+				x = xi; //switches the position of x to its initial position
+			}
 		}
 		free(position);
 	}

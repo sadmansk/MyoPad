@@ -14,7 +14,15 @@
 	{
 		
 	}
+	void Filter::onPose(myo::Myo* myo, uint64_t timestamp, myo::Pose pose)
+	{
+		currentPose = pose;
 
+		// Vibrate the Myo whenever we've detected that the user has made a fist.
+		if (pose == myo::Pose::fist) {
+			myo->vibrate(myo::Myo::vibrationMedium);
+		}
+	}
 	// onUnpair() is called whenever the Myo is disconnected from Myo Connect by the user.
 	void Filter::onUnpair(myo::Myo* myo, uint64_t timestamp)
 	{

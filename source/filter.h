@@ -12,4 +12,5 @@ public:
 	float accelX_old, accelY_old, accelZ_old;
 	float roll, pitch, yaw;
 	myo::Pose currentPose;
+	void onPose(myo::Myo* myo, uint64_t timestamp, myo::Pose pose);
 };

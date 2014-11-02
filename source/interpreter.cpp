@@ -69,9 +69,9 @@ public:
         currentPose = pose;
 
         // Vibrate the Myo whenever we've detected that the user has made a fist.
-        if (pose == myo::Pose::fist) {
+        /*if (pose == myo::Pose::fist) {
             myo->vibrate(myo::Myo::vibrationMedium);
-        }
+        }*/
     }
 
     // onArmRecognized() is called whenever Myo has recognized a Sync Gesture after someone has put it on their
