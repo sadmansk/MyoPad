@@ -7,36 +7,25 @@
 
 //constant values
 const int DIM = 3, FPS = 48;
-const float xThresh = 1, yThresh = 1;
-const int WIDTH = 1000, HEIGHT = 500;
+const float xThresh = 0.005f, yThresh = 0.01f;
+const int WIDTH = 1600, HEIGHT = 900;
 const float scaleA = 1.0, scaleV = 1.0, scaleS = 1.0, armLength = 2.0; //stores the  armlength of the person using the program
 
-void map(float *pos, float qx, float qy, float qz, float arm) {
-	pos[0] = (qx * arm);
-	pos[1] = (qy * arm);
-	pos[2] = (qz * arm);
-}
-
-//detects the stablity on the z position vector
-void onPaper(float z) {
-
-}
-
-void draw(float x, float y) {
+void draw(float x, float y, float tipSize) {
 	//sets up the color for clearing the screen
 	//glClearColor(1.0f, 1.0f, 1.0f, 0);
 	//glClear(GL_COLOR_BUFFER_BIT);
 	//sets up the screen coordinates
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-30, 30, -30, 30, -1, 1);
+	glOrtho(-30, 30, -30, 30, -30, 1);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
 	glColor3ub(0, 0, 0);
 	//glBegin(GL_LINE_STRIP);
-	glPointSize(5.0);
+	glPointSize(tipSize);
 	glBegin(GL_POINTS);
 	glVertex2f(x, y);
 	glEnd();
@@ -53,7 +42,7 @@ int main(int argc, char** argv)
 	//for storing the accelerometer data and the position vector data
 	float *accelIn = (float*)malloc(DIM * sizeof(float));
 	float *position = (float*)malloc(DIM * sizeof(float));
-	
+	float tipSize = 2.5f, xScale = 2.0f, yScale = 4.0f;
 	//set up the GUI
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
@@ -96,38 +85,23 @@ int main(int argc, char** argv)
 		hub.addListener(&collector);
 		int currentTime = clock();
 		hub.run(1000 / FPS);
-		float x = -10 * collector.roll - 25.0f;
-		float beginX = x;
+		float x = -1 * xScale * collector.roll - 25.0f;
+		float y = -1 * yScale * collector.pitch + 20.0f; //up is positive
 		
 		// loop keeps running and mapping the coordinates on the window
-		while (x < 500.0f) {
+		while (true) {
 			//gets 48 packets of data every second
 			hub.run(1000 / FPS);
-
-			//store the accelerometer data in an array
-			//accelIn[0] = collector.accelX;
-			//accelIn[1] = collector.accelY;
-			//accelIn[2] = collector.accelZ;
-
-			//integrate the data
-			//position = accToPos.update(accelIn);
-							//send the value to map
-			//map(position, collector.quatX, collector.quatY, collector.quatZ, armLength);
+			
 			std::cout << '\r';
 			if (write){
-				draw(x + collector.roll * 10, collector.yaw * -20);
-				x += 0.025f;
+				draw(x + collector.roll * xScale, y + collector.yaw * yScale, tipSize);
+				x += 0.005f;
 			}
 			//print the position
 			std::cout << collector.roll << " " << collector.yaw;
-
-			
-			//print the rotational components
-			//std::cout << collector.pitch_i << " " << collector.yaw_i << " " << collector.roll_i;
 		}
-		free(accelIn);
 		free(position);
-		//accToPos.freeAll();
 	}
 	// If a standard exception occurred, we print out its message and exit.
 	catch (const std::exception& e) {
