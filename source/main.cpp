@@ -11,17 +11,11 @@ const float xThresh = 0.005f, yThresh = 0.01f;
 const int WIDTH = 1600, HEIGHT = 900;
 const float scaleA = 1.0, scaleV = 1.0, scaleS = 1.0, armLength = 2.0; //stores the  armlength of the person using the program
 
-void draw(float x, float y, float tipSize, int textColor) {
+void draw(float x, float y, float tipSize, int textColor, float pX, float pY,  float xCursor, float yCursor, float notSpread) {
 	//sets up the color for clearing the screen
 	//glClearColor(1.0f, 1.0f, 1.0f, 0);
 	//glClear(GL_COLOR_BUFFER_BIT);
 	//sets up the screen coordinates
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(-30, 30, -30, 30, -30, 1);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
 	switch (textColor) {
 	case WHITE:
 		glColor3ub(255, 255, 255);
@@ -42,11 +36,21 @@ void draw(float x, float y, float tipSize, int textColor) {
 		glColor3ub(0, 0, 0);
 		break;
 	}
-	
-	//glBegin(GL_LINE_STRIP);
-	glPointSize(tipSize);
+
+	if (notSpread) {
+		glPointSize(tipSize);
+		glBegin(GL_POINTS);
+		glVertex2f(x, y); //drawing point on the screen
+		glEnd();
+	}
+	glPointSize(5.0f);
 	glBegin(GL_POINTS);
-	glVertex2f(x, y);
+	//clear the cursor
+	glColor3ub(255, 255, 255);
+	glVertex2f(pX, pY);
+	//print new cursor
+	glColor3ub(0, 0, 255);
+	glVertex2f(xCursor, yCursor);
 	glEnd();
 	glutSwapBuffers();
 	glReadBuffer(GL_FRONT);
@@ -59,17 +63,21 @@ int main(int argc, char** argv)
 	
 	//int timeInt = 1000000 / FPS;
 	//for storing the accelerometer data and the position vector data
-	float *accelIn = (float*)malloc(DIM * sizeof(float));
-	float *position = (float*)malloc(DIM * sizeof(float));
 	float tipSize = 2.5f, xScale = 2.0f, yScale = 4.0f;
 	int textColor = BLACK;
 	//set up the GUI
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 	glutInitWindowSize(WIDTH, HEIGHT);
-	glutCreateWindow("Draw");
+	glutCreateWindow("MyoPad");
 	glClearColor(1.0f, 1.0f, 1.0f, 0);
 	glClear(GL_COLOR_BUFFER_BIT);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(-30, 30, -30, 30, -30, 1);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 
 	bool write = true;
 	
@@ -101,24 +109,24 @@ int main(int argc, char** argv)
 		//Kinematic accToPos(DIM, scaleA, scaleV, scaleS); //adds the integral class 
 		//sets the precision for floating points
 		std::cout.precision(2);
-
+		bool check = false;
 		hub.addListener(&collector);
 		int currentTime = clock();
 		hub.run(1000 / FPS);
 		float x = -1 * xScale * collector.roll - 25.0f;
 		float y = -1 * yScale * collector.pitch + 20.0f; //up is positive
 		float xi = x;
-		float past_yaw = 0.0f, past_roll = 0.0f;
+		float pastX = 0.0, pastY = 0.0;
 		// loop keeps running and mapping the coordinates on the window
 		while (true) {
 			if (x < 20.0f) {
 				//gets 48 packets of data every second
 				hub.run(1000 / FPS);
 
-				/*if (collector.currentPose.toString() == "waveIn")
-					tipSize -= 0.1f; //decrease the size of the tip
+				if (collector.currentPose.toString() == "waveIn")
+					x -= 0.3f; //decrease the size of the tip
 				else if (collector.currentPose.toString() == "waveOut")
-					tipSize += 0.1f; //increase the size of the tip*/
+					x += 0.1f; //increase the size of the tip*/
 
 				//check whether the thumb is touching the picky and modify color value
 				/*else if (collector.currentPose.toString() == "thumbToPinky") {
@@ -142,13 +150,16 @@ int main(int argc, char** argv)
 					textColor = WHITE;
 					}*/
 				std::cout << '\r';
-				if (!(collector.currentPose.toString() == "fingersSpread")){
-					draw(x + collector.roll * xScale, y + collector.yaw * yScale, tipSize, textColor);	
+				if (!(collector.currentPose.toString() == "fingersSpread" || collector.currentPose.toString() == "waveOut" || collector.currentPose.toString() == "waveIn")) {
+					check = true;
 				}
+				draw(x + collector.roll * xScale, y + collector.yaw * yScale, tipSize, textColor, pastX, pastY, x - 7.5f, y - 5.0f, check);
+				//draw(pastX, pastY, 5.0f, WHITE);
+				//draw(x - 7.5f, y - 5.0f, 5.0f, BLUE);
+				pastX = x - 7.5f;
+				pastY = y - 5.0f;
 				x += 0.01f;
-
-				past_yaw = y + collector.yaw * yScale;
-				past_roll = x + collector.roll * xScale;
+				check = false;
 				//print the position
 				//std::cout << collector.roll << " " << collector.yaw;
 			}
@@ -157,7 +168,6 @@ int main(int argc, char** argv)
 				x = xi; //switches the position of x to its initial position
 			}
 		}
-		free(position);
 	}
 	// If a standard exception occurred, we print out its message and exit.
 	catch (const std::exception& e) {
