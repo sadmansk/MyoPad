@@ -1,64 +1,67 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <title>Myo Pad by unknown2374</title>
+    <meta name="description" content="Myo Pad : A cheaper alternative to smart boards in modern classrooms.">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Myo Pad</title>
   </head>
 
   <body>
-    <div id="container">
-      <div class="inner">
 
-        <header>
-          <h1>Myo Pad</h1>
-          <h2>A cheaper alternative to smart boards in modern classrooms.</h2>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/unknown2374/MyoPad">View on GitHub</a>
+
+          <h1 id="project_title">Myo Pad</h1>
+          <h2 id="project_tagline">A cheaper alternative to smart boards in modern classrooms.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/unknown2374/MyoPad/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/unknown2374/MyoPad/tarball/master">Download this project as a tar.gz file</a>
+            </section>
         </header>
+    </div>
 
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/unknown2374/MyoPad/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/unknown2374/MyoPad/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/unknown2374/MyoPad" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
-        <section id="main_content">
-<p style="display:inline-block; height: 10px;">
-<h4  style="float:right;display:inline-block">
-<a name="current-version-001" class="anchor" href="#current-version-001"><span class="octicon octicon-link"></span></a>Current Version: 0.0.1</h4>
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="myo-pad" class="anchor" href="#myo-pad" aria-hidden="true"><span class="octicon octicon-link"></span></a>Myo Pad</h1>
 
-<h4 style="float:right;display:inline-block;clear:both">
-<a name="developed-at-enghack-2014-in-university-of-waterloo" class="anchor" href="#developed-at-enghack-2014-in-university-of-waterloo"><span class="octicon octicon-link"></span></a>Developed at EngHack 2014 in University of Waterloo</h4>
-</p>
-<p></p>
-<p></p>
-<h3 style="clear:both">
-<a name="what-is-the-myo-armband" class="anchor" href="#what-is-the-myo-armband"><span class="octicon octicon-link"></span></a>What is the Myo Armband?</h3>
+<h4>
+<a id="current-version-001" class="anchor" href="#current-version-001" aria-hidden="true"><span class="octicon octicon-link"></span></a>Current Version: 0.0.1</h4>
+
+<h4>
+<a id="developed-at-enghack-2014-in-university-of-waterloo" class="anchor" href="#developed-at-enghack-2014-in-university-of-waterloo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Developed at EngHack 2014 in University of Waterloo</h4>
+
+<h3>
+<a id="what-is-the-myo-armband" class="anchor" href="#what-is-the-myo-armband" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is the Myo Armband?</h3>
 
 <p>The Myo armband lets you use the electrical activity in your muscles to wirelessly control your computer, phone, and other favorite digital technologies. With the wave of your hand, it will transform how you interact with your digital world. For more information, check out their website at <a href="https://www.thalmic.com/en/myo/">https://www.thalmic.com/en/myo/</a>.</p>
 
 <h3>
-<a name="what-is-the-myo-pad" class="anchor" href="#what-is-the-myo-pad"><span class="octicon octicon-link"></span></a>What is the Myo Pad?</h3>
+<a id="what-is-the-myo-pad" class="anchor" href="#what-is-the-myo-pad" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is the Myo Pad?</h3>
 
 <p>Myo Pad is a program that can be used to export drawings/writings on a surface wearing the Myo armband to graphical data on a computer.</p>
 
 <h3>
-<a name="the-idea" class="anchor" href="#the-idea"><span class="octicon octicon-link"></span></a>The Idea</h3>
+<a id="the-idea" class="anchor" href="#the-idea" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Idea</h3>
 
 <p>We initially planned to draw objects on the GUI of the program by using integrals on the accelerometer data from the arm band to get the position vector and using the quaternion values on the position vector to get an accurate position of the fist. The program would then map that position onto the program's GUI and later could be exported onto a PDF file.</p>
 
 <h3>
-<a name="the-problems" class="anchor" href="#the-problems"><span class="octicon octicon-link"></span></a>The Problems</h3>
+<a id="the-problems" class="anchor" href="#the-problems" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Problems</h3>
 
 <p>Our program was ready to work but then we found out that doing integration twice on the already noisy and inconsistent accelerometer values as well as applying the rotation on the ever changing coordinate system of the arm band. We tried using an independent coordinate system by applying a three dimensional rotation vector on the existing coordinate system but the discrepancies due to the gravity made the values very difficult if not impossible to work with. Hence we had to resolve to using the orientation data from the arm band since they provided a more accurate representation compared to the accelerometer data.</p>
 
 <h3>
-<a name="the-solution" class="anchor" href="#the-solution"><span class="octicon octicon-link"></span></a>The Solution</h3>
+<a id="the-solution" class="anchor" href="#the-solution" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Solution</h3>
 
 <p>And so we did use the orientation data to position our marker on the GUI. But we also decided that we should add more features to the program using the gestures that the Myo library helps us import. Below is a tutorial that demonstrates how some of the gestures can be used to have the best experience with Myo Pad:</p>
 
@@ -74,14 +77,14 @@
 </ul>
 
 <h3>
-<a name="conclusion" class="anchor" href="#conclusion"><span class="octicon octicon-link"></span></a>Conclusion</h3>
+<a id="conclusion" class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h3>
 
 <p>Our completed project is not exactly the innovation we had hoped for when we started working on it. But the entire hackathon and researching was fun nonetheless. It was fun facing problems and finding ways to work around them. The dream we had could have been revolutionary, no one would need to buy expensive graphics tablets, or note taking tablets any more. Teachers would have an easier time sharing their notes with their student, in real time. Yes, in REAL TIME. But we still had a fun to work with end product once you get used to it. It would have been great if we had access to the Myo arm band for longer than just 24 hours. Maybe we would have found a way to apply the Kalman filter on the acceleration vector to get a more accurate position vector out of it. </p>
 
 <p>Last but not least, this project would not have been possible without all the great team members.</p>
 
 <h3>
-<a name="contributors" class="anchor" href="#contributors"><span class="octicon octicon-link"></span></a>Contributors</h3>
+<a id="contributors" class="anchor" href="#contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributors</h3>
 
 <ul>
 <li><a href="http://github.com/unknown2374">Sadman Kazi</a></li>
@@ -89,15 +92,18 @@
 <li><a href="http://github.com/sergei1152">Serge Babayan</a></li>
 <li><a href="http://github.com/shanpls">Shan Phylim</a></li>
 </ul>
-        </section>
-
-        <footer>
-          Myo Pad is maintained by <a href="https://github.com/unknown2374">unknown2374</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
-
-        
-      </div>
+      </section>
     </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Myo Pad maintained by <a href="https://github.com/unknown2374">unknown2374</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
   </body>
 </html>
