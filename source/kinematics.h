@@ -1,13 +1,22 @@
-//
-//  kinematics.h
-//  interpreter
-//
-//  Created by Wojtek Swiderski on 2014-11-01.
-//  Copyright (c) 2014 myohack. All rights reserved.
-//
+/*
+Copyright (C) 2014 Sadman Kazi, Wojciech Swiderski, Serge Babayan, Shan Phylim
 
-//#ifndef __interpreter__kinematics__
-//#define __interpreter__kinematics__
+This file is part of MyoPad.
+
+    MyoPad is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    MyoPad is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with MyoPad.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 
 // Kinematic class contains the acceleration, velocity and position data
 // Integrates and filters acceleration input to give accurate velocity
